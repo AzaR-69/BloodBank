@@ -1,0 +1,39 @@
+<nav class="navbar fixed-top navbar-expand-lg navbar-custom navbar-dark py-3">
+    <a class="navbar-brand" [routerLink]="['/dashboard']">Welcome <span *ngIf="isLoggedIn">{{currentUser.username}}</span></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active"  *ngIf="!isLoggedIn">
+          <a class="nav-link" a [routerLink]="['/login']">Login </a>
+        </li>
+        <li class="nav-item active" *ngIf="!isLoggedIn">
+          <a class="nav-link" a [routerLink]="['/signup']">Register</a>
+        </li>
+        <li class="nav-item active" *ngIf="isUser">
+          <a class="nav-link" a [routerLink]="['/profile']">Profile</a>
+        </li>
+        <li class="nav-item active" *ngIf="isUser || isAdmin">
+          <a class="nav-link" a [routerLink]="['/donors']">Donors</a>
+        </li>
+        <li class="nav-item active" *ngIf="isAdmin">
+          <a class="nav-link" a [routerLink]="['/manageUsers']">Manage Users</a>
+        </li>
+        <li class="nav-item active" *ngIf="isAdmin">
+          <a class="nav-link" a [routerLink]="['/request']">Requests</a>
+        </li>  
+        <li class="nav-item active" *ngIf="isUser">
+          <a class="nav-link" a [routerLink]="['/request']">Request Blood</a>
+        </li>
+        <li class="nav-item active" *ngIf="isUser">
+          <a class="nav-link" a [routerLink]="['/donate']">Join Us</a>
+        </li>
+        <li class="nav-item active" *ngIf="isLoggedIn">
+          <a class="nav-link" (click)="logOut()">Logout</a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+  <router-outlet></router-outlet>

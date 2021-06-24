@@ -1,0 +1,23 @@
+
+.content,.buttons{
+    border-radius: 5px;
+    padding: 15px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+.button-card{
+    padding: 35px;
+}
+.container{
+    margin-top: 50px;
+}
+.button-card button,.operation-buttons button{
+    border-radius: 15px;
+    margin-right: 5px;
+}
+label{
+    font-weight: bold;
+    color: #dc3545;
+}

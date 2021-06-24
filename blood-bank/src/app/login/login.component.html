@@ -1,0 +1,29 @@
+<div class="content">
+    <div class="d-flex justify-content-center"> 
+    <div class="card bg-light border-danger mb-3 shadow rounded"  style="width: 25rem;">
+        <img src="https://ebloodbankodisha.nic.in/files/gallery/1552545098.jpg" class="card-img-top" alt="blood bank">
+        <div class="card-body">
+            <p *ngIf="error" class="text-danger" style="font-weight: bold;">
+                {{ error }}
+            </p>
+         <form #loginForm="ngForm" (ngSubmit)="validate()"  *ngIf="!isLoggedIn" ngNativeValidate>
+            <div class="form-group">
+                <label for="uname">Email username</label>
+                <input type="text" class="form-control" name="uname" placeholder="Enter username" [(ngModel)]="user.username" required 
+                #uname="ngModel">
+                <small class="text-danger" [class.d-none]="uname.valid || uname.untouched">Username is required</small>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="Enter your Password" [(ngModel)]="user.password" required #password="ngModel">
+                <small class="text-danger" [class.d-none]="password.valid || password.untouched">Password is required</small>
+            </div>
+            <button type="submit" class="btn btn-danger btn-block">Submit</button>     
+        </form><br>
+            <p>Forgot password? &nbsp;<a href="">Click here</a></p>
+            <p>New user? &nbsp;<a href="signup">Sign up!</a></p> 
+        </div>
+      </div>
+    </div>
+</div> 
+<router-outlet></router-outlet>

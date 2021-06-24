@@ -1,0 +1,51 @@
+<div class="content">
+   
+    <div class="d-flex justify-content-center"> 
+    <div class="card bg-light border-danger mb-3 shadow rounded"  style="width: 25rem;">
+        <h3 class="card-header text-danger" style="text-align: center;font-weight: bold;">SignUp Page</h3>
+        <div class="card-body">
+            <small class="text-danger" style="text-align: center;font-weight: bold;">{{msg}}</small>
+         <form #registerForm="ngForm" (ngSubmit)="register()" *ngIf="!isSuccessful" ngNativeValidate>
+            <div class="form-group">
+                <label for="anumber">Your Aadhar Number</label>
+                <input type="text" class="form-control" name="anumber" [(ngModel)]="user.id" placeholder="xxxx-xxxx-xxxx" pattern="[0-9]{4}-[0-9]{4}-[0-9]{4}"  maxlength="14" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="name" class="form-control" name="name" [(ngModel)]="user.name" placeholder="Enter your Full Name" required>
+            </div>
+            <div class="form-group">
+                <label for="uname">Your Username</label>
+                <input type="text" class="form-control" name="uname" [(ngModel)]="user.username" placeholder="Enter your username" minlength="5" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <input type="email" class="form-control" name="email" [(ngModel)]="user.email" placeholder="Enter email" required>
+            </div>
+            <div class="form-group">
+                <label for="phone">Mobile Number</label>
+                <input class="form-control" type="text" id="phone" name="mobile" [(ngModel)]="user.mobile"  minlength="10" maxlength="10" placeholder="Enter your mobile number" required>
+            </div>
+            <div class="row">
+                <div class="form-group col-6">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password"  [(ngModel)]="user.password" minlength="6" placeholder="Enter Password" required>
+                </div>
+                <div class="form-group col-6">
+                    <label for="password2">Re-enter Password</label>
+                    <input type="password" class="form-control" name="password2" [(ngModel)]="password2" placeholder="Confirm password" required>
+                </div>
+            </div>    
+            <button type="submit" class="btn btn-danger btn-block">Register</button>
+        </form>
+        <div class="alert alert-success" *ngIf="isSuccessful">
+            Registered Successfully
+        </div>
+        <br>
+        <p *ngIf="!isSuccessful">Already have an account? &nbsp;<a href="login" >Click here!</a></p>
+        </div>
+      </div>
+    </div>
+</div>  
+
+<router-outlet></router-outlet>

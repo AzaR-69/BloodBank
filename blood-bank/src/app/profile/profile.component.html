@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-center container"> 
+<div class="card border-dark shadow bg-white rounded mb-3 " style="max-height:50rem;width: 25rem;">
+    <h5 class="card-header" style="font-weight: bold; color: #3f51b5;"><span *ngIf="!isEditable; else editProfile">Profile</span> 
+    <ng-template #editProfile>Edit Your Profile</ng-template>
+    </h5>
+    <div class="card-body" *ngIf="isEditable; else display">
+    <form #editForm="ngForm" ngNativeValidate>
+      <div class="form-group">
+          <label for="name">Your Name</label>
+          <input type="name" class="form-control" name="name" [(ngModel)]="user.name" placeholder="Enter your Full Name" required>
+      </div>
+      <div class="form-group">
+          <label for="uname">Your Username</label>
+          <input type="text" class="form-control" name="uname" [(ngModel)]="user.username" placeholder="Enter your username" required>
+      </div>
+      <div class="form-group"> 
+          <label for="email">Email address</label>
+          <input type="email" class="form-control" name="email" [(ngModel)]="user.email" placeholder="Enter email" required>
+      </div>
+      <div class="form-group">
+          <label for="phone">Mobile Number</label>
+          <input class="form-control" type="text" id="phone" name="mobile" [(ngModel)]="user.mobile"  mminlength="10" maxlength="10" placeholder="Enter your mobile number" required>
+      </div>
+      <button type="button" style="width: 10rem;" class="btn btn-outline-success" (click)="updateProfile()">Submit</button>
+      <button type="button" class="btn btn-outline-danger" style="float: right;;width: 10rem;" (click)="isEditable=!isEditable">Cancel</button>
+    </form>  
+    </div>
+    <ng-template #display>
+      <div class="card-body" *ngIf="!isEditable">
+        <p class="card-text"><strong>Name: </strong> <span>{{user.name}}</span></p>
+        <p class="card-text"><strong>Username: </strong> <span>{{user.username}}</span></p>
+        <p class="card-text"><strong>Email: </strong> <span>{{user.email}}</span></p>
+        <p class="card-text"><strong>Mobile Number: </strong> <span>{{user.mobile}}</span></p>
+        <button type="button" class="btn btn-outline-success" (click)="isEditable=!isEditable">Edit your profile</button>
+      </div>
+    </ng-template>
+  </div>
+</div>    
+<router-outlet></router-outlet>

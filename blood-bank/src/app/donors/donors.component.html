@@ -1,0 +1,127 @@
+<div class="d-flex justify-content-center content" *ngIf="!edit"> 
+<div class="card my-5 w-75 shadow bg-white rounded donor">
+  <h3 class="card-header text-danger" style="font-weight: bold;">Available Donors: 
+    <span *ngIf="!available">
+      <button class="btn btn-outline-dark" (click)="available=!available"  style="float: right;" > <i class="bi bi-sort-alpha-down"></i>&nbsp; Sort by Blood group</button>
+      <button class="btn btn-outline-dark" (click)="notEditable()" style="float: right;" *ngIf="isAdmin">Add donor</button>
+    </span>  
+    </h3>
+    <div class="card-body"> 
+      <table class="table table-bordered table-striped" *ngIf="!available">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col" *ngIf="isAdmin">Email</th>
+            <th scope="col">Gender</th>
+            <th scope="col">Donated Date</th>
+            <th scope="col">Blood Group</th>
+            <th scope="col" *ngIf="isAdmin">Address</th>
+            <th scope="col">Mobile</th>
+            <th scope="col" *ngIf="isAdmin">Operations</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let donor of donors">
+          <tr *ngIf="donor.active">
+            <td>{{ donor.name }}</td>
+            <td *ngIf="isAdmin">{{ donor.email }}</td>
+            <td>{{ donor.gender }}</td>
+            <td>{{donor.donatedDate}}</td>
+            <td>{{ donor.bloodGroup }}</td>
+            <td *ngIf="isAdmin">{{ donor.address }}</td>
+            <td>{{ donor.mobile }}</td>
+            <td class="operation-buttons" *ngIf="isAdmin"><button type="button" (click)="editable(donor.email)" class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></button>
+              <button type="button" (click)="delete(donor.email)" class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+    <form *ngIf="available">
+        <div class="form-group row">
+          <label for="bloodGroup" class="col-6 col-form-label text-danger">Blood Group</label>
+          <div class="col-6">
+          <select id="bloodGroup" name="bloodGroup" class="form-control" [(ngModel)]="bloodGroup">
+          <option *ngFor="let b of bloodType" [ngValue]="b">{{b}}</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-lg" (click)="getByBlood()">Sort</button>
+    </form>
+    </div>
+  </div>
+</div>  
+<div class="edit-content" *ngIf="edit">
+  <div class="d-flex justify-content-center"> 
+  <div class="card border-danger bg-light mb-3"  style="width: 25rem;" >
+      <h5 class="card-header text-danger" style="font-weight: bold;">
+        <span *ngIf="addDonor; else editData">Add Donor</span>
+        <ng-template #editData>Edit Donor Profile</ng-template>
+      </h5>
+      <div class="card-body">
+       <form #editForm="ngForm" (ngSubmit)="editProfile()" ngNativeValidate>
+          <div class="form-group">
+              <label for="name" class="text-danger">Your Name</label>
+              <input type="name" class="form-control" name="name" [(ngModel)]="donor.name"  placeholder="Enter your Full Name" required>
+          </div>
+          <div class="form-group">
+              <label for="email" class="text-danger">Email address</label>
+              <input type="email" class="form-control" name="email" [(ngModel)]="donor.email" placeholder="Enter email" required>
+          </div>
+          <p class="text-danger"><strong>Gender:</strong></p>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="male" value="Male" [(ngModel)]="donor.gender" checked>
+              <label class="form-check-label text-dark" for="male">
+                Male
+              </label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="female" value="Female" [(ngModel)]="donor.gender"> 
+              <label class="form-check-label text-dark" for="female">
+                Female
+              </label>
+          </div>
+          <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="gender" id="other" value="Others" [(ngModel)]="donor.gender">
+              <label class="form-check-label text-dark" for="other">
+                Others
+              </label>
+          </div>
+            <br><br>
+          <div class="row"> 
+          <div class="form-group col-6">
+              <label for="age" class="text-danger">Age</label>
+              <input type="number" class="form-control" name="age" [(ngModel)]="donor.age" placeholder="Enter your age" required>
+          </div>
+          <div class="form-group col-6">
+            <label for="weight" class="text-danger">Weight</label>
+            <input type="number" class="form-control" name="weight" [(ngModel)]="donor.weight" placeholder="Enter your weight" required>
+          </div>
+        </div> 
+        <div class="row">
+          <div class="form-group col-6">
+              <label for="bloodGroup" class="text-danger">Blood Group</label>
+              <select id="bloodGroup" name="bloodGroup" class="form-control" [(ngModel)]="donor.bloodGroup">
+              <option *ngFor="let b of bloodType" [ngValue]="b">{{b}}</option>
+              </select>
+          </div>
+          <div class="form-group col-6">
+            <label for="date" class="text-danger">Date of Donation</label>
+            <input class="form-control" type="date" id="date" name="date" [(ngModel)]="donor.donatedDate" required>
+          </div>
+        </div> 
+          <div class="form-group">
+              <label for="address" class="text-danger">Address</label>
+              <input type="text" class="form-control" name="address"  placeholder="Enter your address" [(ngModel)]="donor.address" required>
+          </div>
+          <div class="form-group" class="text-danger">
+            <label for="phone">Mobile Number</label>
+            <input class="form-control" type="text" id="phone" name="mobile"  placeholder="Enter your mobile number" [(ngModel)]="donor.mobile" required>
+          </div><br>
+          <button type="submit" style="width: 10rem;" class="btn btn-outline-success">Submit</button>
+          <button type="button" (click)="notEditable()" style="float: right;width: 10rem;" class="btn btn-outline-danger">Cancel</button>
+      </form>
+      </div>
+    </div>
+  </div>
+</div>  
+<router-outlet></router-outlet>

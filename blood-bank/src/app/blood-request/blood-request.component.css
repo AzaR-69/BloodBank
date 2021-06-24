@@ -1,0 +1,9 @@
+.operation-buttons button{
+    margin: 5px;
+    border-radius: 20px;
+}
+#message{
+    border-radius: 25px;
+    margin: 5px;
+    float: right;
+}

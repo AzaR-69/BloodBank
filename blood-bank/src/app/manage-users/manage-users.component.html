@@ -1,0 +1,55 @@
+<div class="d-flex justify-content-center content" style="margin-top: 50px;"> 
+    <div class="card my-5 w-50 shadow bg-white rounded" *ngIf="!isEditable">
+      <h3 class="card-header text-danger" style="font-weight: bold;">Users 
+        </h3>
+        <div class="card-body"> 
+          <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Username</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile</th>
+                <th scope="col">Operations</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let user of users">
+              <tr *ngIf="user.role==='ROLE_USER'">
+               <td>{{user.name}}</td>
+               <td>{{user.username}}</td>
+               <td>{{user.email}}</td>
+               <td>{{user.mobile}}</td>
+               <td class="buttons"><button type="button" class="btn btn-outline-primary" (click)="edit(user.id)"><i class="bi bi-pencil-square"></i></button>
+                <button type="button" class="btn btn-outline-danger" style="margin-left:5px;" (click)="delete(user.id)"><i class="bi bi-trash"></i></button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+     </div>
+    </div> 
+     <div class="card border-dark shadow bg-white rounded mb-3 container" *ngIf="isEditable" style="max-height:50rem;width: 25rem;">
+        <h5 class="card-header" style="font-weight: bold;color: #3f51b5;">Edit User Profile</h5>
+        <div class="card-body">
+        <form #editForm="ngForm">
+          <div class="form-group">
+              <label for="name" >Name</label>
+              <input type="name" class="form-control" name="name" [(ngModel)]="user.name" placeholder="Enter your Full Name" required>
+          </div>
+          <div class="form-group">
+              <label for="uname" >Username</label>
+              <input type="text" class="form-control" name="uname" [(ngModel)]="user.username" placeholder="Enter your username" required>
+          </div>
+          <div class="form-group">
+              <label for="email" >Email address</label>
+              <input type="email" class="form-control" name="email" [(ngModel)]="user.email" placeholder="Enter email" required>
+          </div>
+          <div class="form-group">
+              <label for="phone" >Mobile Number</label>
+              <input class="form-control" type="text" id="phone" name="mobile" [(ngModel)]="user.mobile"  placeholder="Enter your mobile number" required>
+          </div>
+          <button type="button" style="width: 10rem;" class="btn btn-outline-success" (click)="updateProfile()">Submit</button>
+          <button type="button" class="btn btn-outline-danger" style="float: right;width: 10rem;" (click)="isEditable=!isEditable">Cancel</button>
+        </form>  
+        </div>
+      </div>      
+          
