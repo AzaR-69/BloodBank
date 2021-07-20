@@ -1,4 +1,4 @@
-	package com.bb.controller;
+package com.bb.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -93,11 +94,13 @@ public class AuthController {
 	}
 	
 	@GetMapping(value="/findById/{id}")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public User getById(@PathVariable String id) throws Exception {
 		return userRepository.findById(id).orElseThrow(()->new Exception("User not found"));
 	}
 	
 	@PutMapping(value="/updateProfile")
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public void update(@RequestBody User user) {
 		if(userRepository.existsById(user.getId())){
 			userRepository.save(user);
@@ -105,16 +108,19 @@ public class AuthController {
 	}
 	
 	@PostMapping(value="request")
+	@PreAuthorize("hasRole('USER')")
 	public void request(@RequestBody RequestModel model) {
 		request.save(model);
 	}
 	
 	@GetMapping(value="/getUsers")
+	@PreAuthorize("hasRole('ADMIN')")
 	public List<User> getAllUsers(){
 		return userRepository.findAll();
 	}
 	
 	@DeleteMapping(value="/deleteUser/{id}")
+	@PreAuthorize("hasRole('ADMIN')")
 	public void deleteUser(@PathVariable String id) {
 		userRepository.deleteById(id);
 	}

@@ -4,7 +4,6 @@ package com.bb.services;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -38,8 +37,7 @@ public class MyUserDetails implements UserDetails{
 		this.authorities = authorities;
 	}
 	static MyUserDetails build(User user) {
-//		List<GrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName().name())).collect(Collectors.toList());
-		List<GrantedAuthority> authorities=Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+		List<GrantedAuthority> authorities=Arrays.asList(new SimpleGrantedAuthority(user.getRole()));//Arrays.stream(user.getRole().split(",")).map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 		return new MyUserDetails(
 				user.getId(),
 				user.getName(),

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,22 +25,26 @@ public class BloodRequestController {
 	RequestRepository requestRepository;
 	
 	@GetMapping(path="")
+	@PreAuthorize("hasRole('ADMIN')")
 	public List<RequestModel> getRequests(){
 		return requestRepository.findAll();
 	}
 	
 	@PostMapping(path="/update")
+	@PreAuthorize("hasRole('ADMIN')")
 	public void updateRequest(@RequestBody RequestModel model) {
 		requestRepository.save(model);
 	}
 	
 	@GetMapping(path="/getByEmail/{email}")
+	@PreAuthorize("hasRole('USER')")
 	public List<RequestModel> getByEmail(@PathVariable String email)
 	{
 		return requestRepository.findByEmail(email);
 	}
 	
 	@DeleteMapping(path="/delete/{email}/{patientName}")
+	@PreAuthorize("hasRole('USER')")
 	public void delete(@PathVariable String email,@PathVariable String patientName)
 	{
 		try {
